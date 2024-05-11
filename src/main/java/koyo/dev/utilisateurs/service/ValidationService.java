@@ -19,13 +19,20 @@ public class ValidationService {
 
    private ValidationRepository validationRepository ;
 
-   private void validation (User user){
+   public void validation (User user){
        Validation validation = new Validation();
        validation.setUser(user);
        Instant creation = Instant.now();
        Instant expiration = creation.plus(10, ChronoUnit.MINUTES);
 
        Random random = new Random();
-     int randomInteger =random.nextInt(999999);
+       int randomInteger =random.nextInt(999999);
+       String code = String.format("%06d",randomInteger);
+
+     validation.setCreation(creation);
+     validation.setExpiration(expiration);
+     validation.setCode(code);
+
+     this.validationRepository.save(validation);
    }
 }

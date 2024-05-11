@@ -19,6 +19,8 @@ public class UserService {
     public final UserRepository userRepository;
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private ValidationService validationService;
+
     public User create(User user){
        String mdpCrypte = this.bCryptPasswordEncoder.encode(user.getPassword());
        user.setPassword(mdpCrypte);
@@ -26,7 +28,8 @@ public class UserService {
            throw new RuntimeException("Votre email est invalide");
        }
 
-        this.userRepository.save(user);
+        user=this.userRepository.save(user);
+        this.validationService.validation(user);
         log.info("nouvelle utilisateur ajouté ");
         return user;
     }

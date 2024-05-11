@@ -1,9 +1,6 @@
 package koyo.dev.utilisateurs.entite;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,23 +15,23 @@ import java.time.Instant;
 @Entity
 @Table(name = "validation")
 public class Validation {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private Instant creation;
-    private Instant expire;
+    private Instant expiration;
     private Instant activation;
     private String code;
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
-    public Validation() {
-    }
 
-    public Validation(Instant activation, String code, Instant creation, Instant expire, int id, User user) {
+
+    public Validation(Instant activation, String code, Instant creation, Instant expiration, int id, User user) {
         this.activation = activation;
         this.code = code;
         this.creation = creation;
-        this.expire = expire;
+        this.expiration = expiration;
         this.id = id;
         this.user = user;
     }
@@ -63,12 +60,12 @@ public class Validation {
         this.creation = creation;
     }
 
-    public Instant getExpire() {
-        return expire;
+    public Instant getExpiration() {
+        return expiration;
     }
 
-    public void setExpire(Instant expire) {
-        this.expire = expire;
+    public void setExpiration(Instant expiration) {
+        this.expiration = expiration;
     }
 
     public int getId() {
