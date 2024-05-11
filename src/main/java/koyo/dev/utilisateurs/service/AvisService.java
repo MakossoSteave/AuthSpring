@@ -26,4 +26,8 @@ public class AvisService {
         return this.avisRepository.findAll();
     }
 
+    public Avis findOne(int a){
+       return this.avisRepository.getById(a);
+    }
+
 }

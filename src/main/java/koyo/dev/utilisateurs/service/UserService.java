@@ -6,6 +6,7 @@ import koyo.dev.utilisateurs.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,14 @@ public class UserService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
     public final UserRepository userRepository;
 
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     public User create(User user){
+       String mdpCrypte = this.bCryptPasswordEncoder.encode(user.getPassword());
+       user.setPassword(mdpCrypte);
+       if(!user.getEmail().contains("@")){
+           throw new RuntimeException("Votre email est invalide");
+       }
+
         this.userRepository.save(user);
         log.info("nouvelle utilisateur ajouté ");
         return user;

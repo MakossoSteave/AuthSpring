@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("avis")
@@ -21,10 +23,15 @@ public class AvisController {
         this.avisService.Creer(avis);
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @RequestMapping("get")
-    public List<Avis> getAvis(){
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
+    public  @ResponseBody List<Avis> getAvis(){
       return this.avisService.getAvis();
+    }
+
+    @RequestMapping("get/{id}")
+    public Avis Read(@PathVariable int id){
+        return this.avisService.findOne(id);
     }
 
 
