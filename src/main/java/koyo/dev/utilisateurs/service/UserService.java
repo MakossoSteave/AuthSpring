@@ -1,18 +1,44 @@
 package koyo.dev.utilisateurs.service;
 
+import jakarta.transaction.Transactional;
 import koyo.dev.utilisateurs.entite.User;
 import koyo.dev.utilisateurs.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Service
 public class UserService {
 
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
     public final UserRepository userRepository;
 
-    public void create(User user){
+    public User create(User user){
         this.userRepository.save(user);
-        System.out.println("nouvelle utilisateur ajouté ");
+        log.info("nouvelle utilisateur ajouté ");
+        return user;
     }
+
+    @Transactional
+    public Iterable<User> getUser(){
+        long data = this.userRepository.count();
+        List<User> users = userRepository.findAll();
+        System.out.println(users);
+        if (users.size() <= 0) {
+            System.out.println("Aucun utilisateur trouvé.");
+        } else {
+            System.out.println("Liste des utilisateurs récupérée :");
+            for (User user : users) {
+                System.out.println(user.toString());}
+        }
+        return  users;
+    }
+
+
+
+
 }

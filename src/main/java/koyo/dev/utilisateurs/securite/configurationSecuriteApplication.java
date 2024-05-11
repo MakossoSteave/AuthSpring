@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
 @Configuration
@@ -20,8 +21,10 @@ public class configurationSecuriteApplication {
                     .csrf(AbstractHttpConfigurer::disable)
                     .authorizeHttpRequests(
                             authorize ->
-                                    authorize.requestMatchers(POST,"/inscription").permitAll()
-                                            .requestMatchers(POST, "avis").permitAll()
+                                    authorize
+                                            .requestMatchers(GET,"/user").permitAll()
+                                            .requestMatchers(POST,"/avis/add").permitAll()
+                                            .requestMatchers(POST,"/inscription").permitAll()
                                             .anyRequest().authenticated()
                     ).build();
     }
