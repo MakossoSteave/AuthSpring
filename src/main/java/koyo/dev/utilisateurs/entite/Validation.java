@@ -9,9 +9,7 @@ import org.hibernate.annotations.Cascade;
 
 import java.time.Instant;
 
-@Getter
-@Setter
-@NoArgsConstructor
+
 @Entity
 @Table(name = "validation")
 public class Validation {
@@ -25,7 +23,8 @@ public class Validation {
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
-
+    public Validation() {
+    }
 
     public Validation(Instant activation, String code, Instant creation, Instant expiration, int id, User user) {
         this.activation = activation;
